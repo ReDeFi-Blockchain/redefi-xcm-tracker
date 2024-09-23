@@ -14,20 +14,44 @@ from substrateinterface import SubstrateInterface
 from scalecodec.base import RuntimeConfigurationObject, ScaleBytes
 
 connections: Dict[Location, Connection] = {}
-for (location, url) in [('L1', L1_DB_CONNECTION), ('L2', L2_DB_CONNECTION)]:
-    url = urlparse(url)
-    connections[location] = pymysql.connect(
-        host=url.hostname,
-        port=url.port,
-        user=url.username,
-        password=url.password,
-        database=url.path[1:],
-        cursorclass=pymysql.cursors.DictCursor)
-
 substrates: Dict[Location, SubstrateInterface] = {}
-if VERY_OLD_RELAY:
-    for (location, url) in [('L1', L1_SUBSTRATE_RPC_URL), ('L2', L2_SUBSTRATE_RPC_URL)]:
-        substrates[location] = SubstrateInterface(url)
+
+def setup_connections():
+    global connections
+    global substrates
+    
+    for (location, url) in [('L1', L1_DB_CONNECTION), ('L2', L2_DB_CONNECTION)]:
+        url = urlparse(url)
+        connections[location] = pymysql.connect(
+            host=url.hostname,
+            port=url.port,
+            user=url.username,
+            password=url.password,
+            database=url.path[1:],
+            cursorclass=pymysql.cursors.DictCursor)
+    
+    if VERY_OLD_RELAY:
+        for (location, url) in [('L1', L1_SUBSTRATE_RPC_URL), ('L2', L2_SUBSTRATE_RPC_URL)]:
+            substrates[location] = SubstrateInterface(url)
+
+def close_connections():
+    global connections
+    global substrates
+    
+    for (location, connection) in connections.items():
+        try:
+            connection.close()
+        except:
+            pass
+
+    for (location, substrate) in substrates.items():
+        try:
+            substrate.close()
+        except:
+            pass
+
+    connections = {}
+    substrates = {}
 
 def get_transaction(tx_hash: str) -> Transaction:
     if not re.match(r'^0[xX][0-9a-fA-F]{64}$', tx_hash):
