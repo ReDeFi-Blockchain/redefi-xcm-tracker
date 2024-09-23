@@ -10,15 +10,18 @@ services:
       "HOST": "127.0.0.1"
       "PORT": "5000"
       
-      # App used polkadot database directly
-      "L1_DB_CONNECTION": "pymysql://root:root@127.0.0.1:33060/polkascan"
       # Polkascan url used for building links to blocks and events for user
       "L1_POLKASCAN": "https://polkascan.io/L1"
+      # Blockscout url used for building links to transactions for user
+      "L1_BLOCKSCOUT": "https://blockscout.io/L1"
+      # App used polkadot database directly
+      "L1_DB_CONNECTION": "pymysql://root:root@127.0.0.1:33060/polkascan"
       # Node is required for viewing relay-parachain transfers
       "L1_SUBSTRATE_RPC_URL": "ws://redefi-relay/"
       
-      "L2_DB_CONNECTION": "pymysql://root:root@127.0.0.1:33061/polkascan"
       "L2_POLKASCAN": "https://polkascan.io/L2"
+      "L2_BLOCKSCOUT": "https://blockscout.io/L2"
+      "L2_DB_CONNECTION": "pymysql://root:root@127.0.0.1:33061/polkascan"
       "L2_SUBSTRATE_RPC_URL": "ws://redefi-parachain/"
     ports:
       - "127.0.0.1:5000:5000"

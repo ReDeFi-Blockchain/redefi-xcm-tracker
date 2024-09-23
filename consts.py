@@ -19,3 +19,8 @@ POLKADOT_INSTANCE: Dict[Location, str] = {
     'L1': L1_POLKASCAN,
     'L2': L2_POLKASCAN,
 }
+
+BLOCKSCOUT_INSTANCE: Dict[Location, str] = {
+    'L1': L1_BLOCKSCOUT,
+    'L2': L2_BLOCKSCOUT,
+}

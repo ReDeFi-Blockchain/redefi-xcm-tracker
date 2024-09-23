@@ -48,6 +48,7 @@ class Block:
 @dataclass
 class Transaction:
     tx_hash: str
+    link_to_scanner: str
     xcm_id: str
     sender: Account
     receiver: Account

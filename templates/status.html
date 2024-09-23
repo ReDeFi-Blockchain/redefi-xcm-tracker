@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table class="table" id="state">
+<a id="eth-scanner-link" href="{{ tx.link_to_scanner }}">View transaction on the Blockscout Ethereum Scanner</a>
+
+<table id="state" class="table">
     <tbody>
         <tr>
             <td>Status</td>

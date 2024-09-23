@@ -46,6 +46,7 @@ def get_transaction(tx_hash: str) -> Transaction:
     if xcm_error:
         return Transaction(
             tx_hash=tx.tx_hash,
+            link_to_scanner=build_tx_link(tx.sender.location, tx.tx_hash),
             xcm_id=None,
             sender=tx.sender,
             receiver=tx.receiver,
@@ -72,6 +73,7 @@ def get_transaction(tx_hash: str) -> Transaction:
 
     return Transaction(
         tx_hash=tx.tx_hash,
+        link_to_scanner=build_tx_link(tx.sender.location, tx.tx_hash),
         xcm_id=xcm_id,
         sender=tx.sender,
         receiver=tx.receiver,
@@ -232,11 +234,17 @@ def fetch_extrinsic_events(location: Location, extrinsic_idx: ExtrinsicIdx) -> l
         
         return events
 
-# Build an url to the event to Polkascan
+# Build an url to the event on Polkascan
 def build_event_link(location: Location, block_number: int, idx: int) -> str:
     polkadot_url = urlparse(POLKADOT_INSTANCE[location])
     polkadot_path = urljoin(f'{polkadot_url.path}/', f'event/{block_number}-{idx}')
     return urlunparse(polkadot_url._replace(path=polkadot_path))
+
+# Build an url to the tx on Blockscout
+def build_tx_link(location: Location, tx_hash: str) -> str:
+    blockscout_url = urlparse(BLOCKSCOUT_INSTANCE[location])
+    blockscout_path = urljoin(f'{blockscout_url.path}/', f'tx/{tx_hash}')
+    return urlunparse(blockscout_url._replace(path=blockscout_path))
 
 # "Looks for the Xcm Attempted event and checks it for errors
 def get_xcm_error(events: list[Event]) -> Optional[str]:
