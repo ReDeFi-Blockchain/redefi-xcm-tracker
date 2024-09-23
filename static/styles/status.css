@@ -1,0 +1,46 @@
+.table {
+    table-layout: fixed;
+}
+
+.table th, .table td {
+    padding-left: 0;
+    padding-right: 0;
+    vertical-align: middle;
+}
+
+#state p {
+    margin: 0;
+}
+
+#state tr > td:nth-child(1) {
+    width: 6em;
+    font-weight: bold;
+}
+
+#state tr > td:nth-child(2) p {
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+#xcm-status {
+    display: flex;
+    flex-direction: row;
+}
+
+#xcm-status > img {
+    margin-right: 0.25em;
+}
+
+h5 {
+    margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 400px) {
+    .events-table tr > th:nth-child(1) {
+        width: 6em;
+    }
+}
+
+#receiver-events {
+    margin-bottom: 0;
+}

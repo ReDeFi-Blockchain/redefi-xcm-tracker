@@ -1,0 +1,14 @@
+.venv
+__pycache__
+*.egg-info
+
+.gitignore
+
+*.env
+
+docker
+README.md
+screenshot.png
+
+pyproject.toml
+uv.lock

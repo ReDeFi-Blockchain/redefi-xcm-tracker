@@ -1,0 +1,24 @@
+services:
+  xcm-viewer:
+    build:
+      context: "${PWD}"
+      dockerfile: "${PWD}/docker/Dockerfile"
+    environment:
+      "DEBUG": "False"
+      # Enable some hacks for relay. This is needed until ReDeFi is updated to 1.9+
+      "VERY_OLD_RELAY": "True"
+      "HOST": "127.0.0.1"
+      "PORT": "5000"
+      
+      # App used polkadot database directly
+      "L1_DB_CONNECTION": "pymysql://root:root@127.0.0.1:33060/polkascan"
+      # Polkascan url used for building links to blocks and events for user
+      "L1_POLKASCAN": "https://polkascan.io/L1"
+      # Node is required for viewing relay-parachain transfers
+      "L1_SUBSTRATE_RPC_URL": "ws://redefi-relay/"
+      
+      "L2_DB_CONNECTION": "pymysql://root:root@127.0.0.1:33061/polkascan"
+      "L2_POLKASCAN": "https://polkascan.io/L2"
+      "L2_SUBSTRATE_RPC_URL": "ws://redefi-parachain/"
+    ports:
+      - "127.0.0.1:5000:5000"

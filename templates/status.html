@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table class="table" id="state">
+    <tbody>
+        <tr>
+            <td>Status</td>
+            <td>
+                <div id="xcm-status">
+                    {% if tx.status == 'InProgress' %}
+                    <img src="{{ url_for('static', filename='in_progress.svg') }}" alt="">
+                    <p>In progress</p>
+                    {% elif tx.status == 'Done' %}
+                    <img src="{{ url_for('static', filename='done.svg') }}" alt="">
+                    <p>Success</p>
+                    {% elif tx.status == 'Error' %}
+                    <img src="{{ url_for('static', filename='error.svg') }}" alt="">
+                    <p>Xcm Error: {{ tx.error }}</p>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>XCM ID</td>
+            <td>
+                <p>
+                {% if tx.xcm_id %}
+                {{ tx.xcm_id }}
+                {% else %}
+                    —
+                {% endif %}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>From {{ tx.sender.location }}</td>
+            <td><p>{{ tx.sender.address }}</p></td>
+        </tr>
+        <tr>
+            <td>To {{ tx.receiver.location }}</td>
+            <td><p>{{ tx.receiver.address }}</p></td>
+        </tr>
+        <tr>
+            <td>Value</td>
+            <td><p>{{ tx.amount.value }} {{ tx.amount.currency }}</p></td>
+        </tr>
+        <tr>
+            <td>Blocks</td>
+            <td>
+                <p>
+                    Sent in block: 
+                    <a href="{{ tx.sent_in_block.link }}">{{ tx.sent_in_block.number }}</a>
+                </p>
+                <p>
+                    Received in block: 
+                    {% if tx.received_in_block %}
+                        <a href="{{ tx.received_in_block.link }}">{{ tx.received_in_block.number }}</a>
+                    {% else %}
+                        —
+                    {% endif %}
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h4>Events</h4>
+
+<h5>Sender</h5>
+
+<table class="table events-table">
+    <thead>
+        <tr>
+            <th scope="col">Event ID</th>
+            <th scope="col">Pallet</th>
+            <th scope="col">Event Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in tx.events.sender %}
+        <tr>
+            <td><a href="{{ event.link }}" target="_blank">{{ event.block_number }}-{{ event.idx }}</a></td>
+            <td>{{ event.pallet }}</td>
+            <td>{{ event.name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if tx.events.receiver %}
+<h5>receiver</h5>
+
+<table id="receiver-events" class="table events-table">
+    <thead>
+        <tr>
+            <th scope="col">Event ID</th>
+            <th scope="col">Pallet</th>
+            <th scope="col">Event Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in tx.events.receiver %}
+        <tr>
+            <td><a href="{{ event.link }}" target="_blank">{{ event.block_number }}-{{ event.idx }}</a></td>
+            <td>{{ event.pallet }}</td>
+            <td>{{ event.name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

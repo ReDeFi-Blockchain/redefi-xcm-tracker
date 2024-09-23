@@ -1,0 +1,15 @@
+[project]
+name = "xcm-viewer"
+version = "0.1.0"
+requires-python = "==3.11.9"
+dependencies = [
+    "flask==3.0.3",
+    "pymysql==1.1.1",
+    "python-dotenv>=1.0.1",
+    "scalecodec>=1.2.11",
+    "substrate-interface>=1.7.10",
+    "waitress>=3.0.0",
+]
+
+[tool.setuptools]
+py-modules = []
