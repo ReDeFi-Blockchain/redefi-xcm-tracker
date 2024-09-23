@@ -4,7 +4,7 @@ services:
       context: "${PWD}"
       dockerfile: "${PWD}/docker/Dockerfile"
     environment:
-      "DEBUG": "False"
+      "DEBUG_APP": "False"
       # Enable some hacks for relay. This is needed until ReDeFi is updated to 1.9+
       "VERY_OLD_RELAY": "True"
       "HOST": "127.0.0.1"

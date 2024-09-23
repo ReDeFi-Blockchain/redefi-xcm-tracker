@@ -10,7 +10,7 @@ def mandatory_env(var: str):
     else:
         raise Exception(f"Missing env var '{var}'")
 
-DEBUG = mandatory_env("DEBUG") == "True"
+DEBUG = mandatory_env("DEBUG_APP") == "True"
 VERY_OLD_RELAY = mandatory_env("VERY_OLD_RELAY") == "True"
 
 HOST = mandatory_env("HOST")
